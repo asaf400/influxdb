@@ -171,10 +171,10 @@ See below for more information.
  influx -import -path=metrics-default
  ```
 
- To redirect failed import lines to another file, run this command:
+ To redirect failed import lines (in line protocol format) to another file, run this command:
 
  ```sh
- influx -import -path=metrics-default.gz -compressed > failures
+ influx -import -path=metrics-default.gz -compressed 2> failures
  ```
 
  The import will use the line protocol in batches of 5,000 lines per batch when sending data to the server.
@@ -184,7 +184,7 @@ See below for more information.
  If you need to throttle the import so the database has time to ingest, you can use the `-pps` flag.  This will limit the points per second that will be sent to the server.
  
   ```sh
- influx -import -path=metrics-default.gz -compressed -pps 50000 > failures
+ influx -import -path=metrics-default.gz -compressed -pps 50000 2> failures
  ```
  
  Which is stating that you don't want MORE than 50,000 points per second to write to the database. Due to the processing that is taking place however, you will likely never get exactly 50,000 pps, more like 35,000 pps, etc. 
